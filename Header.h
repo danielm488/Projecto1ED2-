@@ -19,6 +19,7 @@ struct Header_info
 	unsigned int size;
 	bool type;
 	string date;
+	string namecmp;
 	int parent;
 	int firstchild;
 	int rightsibling;
@@ -47,18 +48,19 @@ public:
 		return str;
 	}
 
-	static string Comand(char comand[20])
+	static string Comand(char comand[20],string s)
 	{
-		string action,reader;
+		string action, reader = "";
 		int a = 0;
 		for (int i = 0; i <20; i++)
+
 		{
 			if(comand[i]!=32 && comand[i]!=-52)
 			{
 				reader = reader + comand[i];
 				a++;
 
-				if(reader=="mkdir"&& comand[i+1]==32 )
+				if(reader=="mkdir"&& comand[i+1]==32)
 				{
 					action = "mkdir";
 					cout << "\n"<<action;
@@ -77,6 +79,7 @@ public:
 					action = "cd..";
 					cout << "\n" << action;
 					system("pause");
+					reader = "";
 				}
 				else if (reader == "rm" && comand[i + 1] == 32)
 				{
@@ -99,22 +102,32 @@ public:
 					system("pause");
 					reader = "";
 				}
-			}
-			
-			
 
+			}
 		}
-		return reader;
+
+		if (action=="cd"&&a!=0)
+		{
+			return reader;
+		}
+		else if(a == 0)
+		{
+			return s;
+		}
+		else
+		{
+			return "";
+		}
+		
 	}
 
 	static void comand_prompt(string s)
 	{
 		char action[20];
-		cin.ignore();
 		cin.getline(action, 20);
-		strcpy(action, Comand(action).c_str());
-		cin.ignore();
-		cout << "\nDaniel@" << "/" << s << "/" <<action<< "~$";
+		string diskmname = s + Comand(action, s);
+		strcpy(action, diskmname.c_str());
+		cout << "\nDaniel@" << "/" <<action<< "~$";
 		
 	}
 
@@ -123,7 +136,6 @@ public:
 		string const disk1= comand + ".bin";
 		fstream Disk(disk1,ios::in| ios::binary| ios::app);
 		Header_info info;
-
 		if(!Disk)
 		{
 			cout << "\n\nError Creating the Disk!\n\n";
@@ -137,11 +149,23 @@ public:
 		info.size = 0;
 		info.type = false;
 		info.date = get_time();
+		info.namecmp = comand;
 		Disk.write(reinterpret_cast<const char*>(&info),sizeof(Header_info));
-		system("cls");
-		cout << "\nDaniel@" << "/" << comand<<"$";
 		Disk.close();
 
+	}
+
+	static bool Open_Disk(string comand)
+	{
+		string const disk1 = comand + ".bin";
+		ifstream Disk(disk1, ios::out | ios::binary);
+		Header_info info;
+		if (!Disk)
+		{
+			return false;
+		}
+		Disk.close();
+		return true;
 	}
 	
 	static string inicialize_format()
@@ -149,7 +173,7 @@ public:
 		char comand[20];
 		cout << "\n\n\tCreate A Disk:\t";
 		cin >> comand;
-		cin.ignore();
+		if(!Open_Disk(comand))
 		Create_Disk(comand);
 		return comand;
 	}

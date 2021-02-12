@@ -20,12 +20,15 @@ using namespace std;
 int main()
 {
 	Header_info disk;
-	strcpy(disk.name, Consule::inicialize_format().c_str());
+	string diskname = Consule::inicialize_format() + ".bin";
+	fstream Disk(diskname,ios::in | ios::binary | ios::app);
+	Disk.seekg(0, ios::beg);
+	Disk.read(reinterpret_cast<char*>(&disk), sizeof(Header_info));
 	do
 	{
-		Consule::comand_prompt(disk.name);
+		Consule::comand_prompt(disk.namecmp);
 
 	} while (true);
 
-   
+	Disk.close();
 }
