@@ -1,0 +1,10 @@
+﻿  HashTable.cpp
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(7,1): error C2955: 'HashTable': use of class template requires template argument list
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.h(10): message : see declaration of 'HashTable'
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(7,1): error C2244: 'HashTable::generarregistro': unable to match function definition to an existing declaration
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(7): message : see declaration of 'HashTable::generarregistro'
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(7,1): message : definition
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(7,1): message : 'void HashTable::generarregistro(void)'
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(7,1): message : existing declarations
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(7,1): message : 'void HashTable<k,V>::generarregistro(void)'
+C:\Users\danie\OneDrive\Desktop\Proyecto1ED2\Proyecto1ED2\HashTable.cpp(8,1): error C2447: '{': missing function header (old-style formal list?)
